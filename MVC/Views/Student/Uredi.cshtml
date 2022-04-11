@@ -1,0 +1,74 @@
+﻿@using System.Collections.Generic
+@using MVC.Models
+
+@{
+    Layout = null;
+    List<Smjer> smjerovi = (List<Smjer>)ViewData["smjerovi"];
+    Student student = (Student)ViewData["student"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dodaj</title>
+</head>
+<body>
+    <div>
+        <form action="/Student/Snimi">
+            <input type="hidden" value="@student.Id" name="studentId"/>
+            <table>
+                <tr>
+                    <td>Ime:</td>
+                    <td><input type="text" name="ime" value="@student.Korisnik.Ime"/></td>
+                </tr>
+                <tr>
+                    <td>Prezime:</td>
+                    <td><input type="text" name="prezime" value="@student.Korisnik.Prezime"/></td>
+                </tr>
+                <tr>
+                    <td>Broj indexa:</td>
+                    <td><input type="text" name="brojIndexa" value="@student.BrojIndexa"/></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" name="username" value="@student.Korisnik.Username"/></td>
+                </tr>
+                <tr>
+                    <td>Lozinka:</td>
+                    <td><input type="password" name="password" value="@student.Korisnik.Password"/></td>
+                </tr>
+                <tr>
+                    <td>Datum rodjenja:</td>
+                    @if (student.Korisnik.DatumRodjenja.Year < 1900)
+                    {
+                        <td><input type="datetime" name="datumRodjenja" value="01.01.2001" /></td>
+                    }
+                    else
+                    {
+                        <td><input type="datetime" name="datumRodjenja" value="@student.Korisnik.DatumRodjenja" /></td>
+
+                    }
+                </tr>
+                <tr>
+                    <td>Smjer:</td>
+                    <td>
+                        <select name="smjerId">
+                            @foreach (var item in smjerovi)
+                            {
+                                <option value="@item.Id" @(item.Id == student.SmjerId?"selected":"")>@item.Naziv</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="text-align:right";> <input type="submit" value="Snimi" /></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</body>
+</html>
